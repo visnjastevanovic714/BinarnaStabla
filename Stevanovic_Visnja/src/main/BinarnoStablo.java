@@ -64,4 +64,25 @@ public class BinarnoStablo extends ABinarnoStablo {
 			return false;
 		return levaStrana && desnaStrana;
 	}
+
+	@Override
+	public CvorStabla vratiListNaNajmanjojDubini(CvorStabla k) throws LabisException {
+		if (k == null || (k.levo == null && k.desno == null)) {
+			return k;
+		}
+		if (nivoNajplicegCvora(k.levo) < nivoNajplicegCvora(k.desno)) {
+			return vratiListNaNajmanjojDubini(k.levo);
+		}
+		return vratiListNaNajmanjojDubini(k.desno);
+	}
+
+	private int nivoNajplicegCvora(CvorStabla k) {
+		if (k == null) {
+			return Integer.MAX_VALUE;
+		}
+		if (k.levo == null && k.desno == null) {
+			return 0;
+		}
+		return 1 + Math.min(nivoNajplicegCvora(k.levo), nivoNajplicegCvora(k.desno));
+	}
 }
